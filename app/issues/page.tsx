@@ -1,44 +1,55 @@
-
-import React from 'react'
-import { Button, Table } from '@radix-ui/themes'
-import Link from 'next/link'
-import prisma from '@/prisma/client'
+import React from 'react';
+import { Button } from '@radix-ui/themes';
+import { Table } from '@radix-ui/themes';
+import Link from 'next/link';
+import { PlusCircle, Pointer} from 'lucide-react';
+import IssueStatusBadge from '../components/IssueStatusBadge';
+import prisma from '@/prisma/client';
 
 const Issues = async () => {
-  const issues = await prisma.issue.findMany();
+  const issues = await prisma.issue.findMany()
+
   return (
-    <div >
-      <div className='mb-5'>
-        <Link href={'./issues/new'}><Button>New Issue</Button></Link>
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">Issue Tracker</h1>
+        <Link href="./issues/new" passHref>
+          <Button style={{cursor : 'pointer'}}>
+            <PlusCircle size={18} />
+            New Issue
+          </Button>
+        </Link>
       </div>
-      <div className="max-w-full overflow-x-auto">
-      <Table.Root 
-        variant="surface" 
-        className="w-auto border border-gray-300 rounded-lg shadow-sm"
-      >
-      <Table.Header className="text-white">
-        <Table.Row>
-          <Table.ColumnHeaderCell className="py-3 px-4 text-left">Issues</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="py-3 px-4 text-left">Status</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="py-3 px-4 text-left">Created At</Table.ColumnHeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {issues.map((issue) => (
-          <Table.Row
-            key={issue.id}
-            className="hover:bg-blue-50 even:bg-gray-100"
-          >
-            <Table.Cell className="py-2 px-4">{issue.title}</Table.Cell>
-            <Table.Cell className="py-2 px-4">{issue.status}</Table.Cell>
-            <Table.Cell className="py-2 px-4">{issue.createdAt.toDateString()}</Table.Cell>
+
+      <Table.Root variant="surface">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Issues</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Created</Table.ColumnHeaderCell>
           </Table.Row>
-        ))}
-      </Table.Body>
+        </Table.Header>
+
+        <Table.Body>
+          {issues.map((issue) => (
+            <Table.Row key={issue.id}>
+              <Table.Cell>{issue.title}</Table.Cell>
+              <Table.Cell>
+                <IssueStatusBadge status={issue.status} />
+              </Table.Cell>
+              <Table.Cell>
+                {new Date(issue.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       </Table.Root>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Issues
+export default Issues;

@@ -10,6 +10,7 @@ import { createIssueSchema } from '@/app/validateSchemas'
 import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage'
 import Spinner from '@/app/components/Spinner'
+import {SendHorizonal } from 'lucide-react'
 
 const NewIssuePage = () => {
     type issueForm = z.infer<typeof createIssueSchema>
@@ -52,9 +53,13 @@ const NewIssuePage = () => {
             <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
-        <Button disabled={isSubmitting} className='bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-800 transition-colors ease-in'>
-            {isSubmitting ? "Submitting..." : "Submit New Issue"} 
+        <Button 
+        style={{cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+        disabled={isSubmitting}
+        >
+            {isSubmitting ? "Submitting..." : "Submit"} 
             {isSubmitting && <Spinner/>}
+            <SendHorizonal size={18}/>
         </Button>
     </form>
     </div>
