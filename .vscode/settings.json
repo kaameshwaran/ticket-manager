@@ -18,7 +18,7 @@
             "selfClosingStyle": "xml"
         }
     },
-
+      
     // Enable auto-close and other Emmet features
     "emmet.showAbbreviationSuggestions": true,
     "emmet.triggerExpansionOnTab": true,
@@ -29,5 +29,13 @@
     // Prettier or formatting settings (optional but useful for a Next.js project)
     "editor.formatOnSave": true,
     "prettier.singleQuote": true,
-    "prettier.trailingComma": "es5"
+    "prettier.trailingComma": "es5",
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnType": false, // required
+    "editor.formatOnPaste": true, // optional
+    "editor.formatOnSaveMode": "file", // required to format on save
+    "files.autoSave": "onFocusChange", // optional but recommended
+    "vs-code-prettier-eslint.prettierLast": false 
+
+      
 }
