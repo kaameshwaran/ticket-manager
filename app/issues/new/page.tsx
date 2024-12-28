@@ -8,6 +8,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { createIssueSchema } from '@/app/validateSchemas'
 import { z } from 'zod'
+import ErrorMessage from '@/app/components/ErrorMessage'
 
 const NewIssuePage = () => {
     type issueForm = z.infer<typeof createIssueSchema>
@@ -36,7 +37,7 @@ const NewIssuePage = () => {
                 {...register('title')} 
                 className='border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors'
             />
-            {errors.title && <Text className='text-red-600 text-sm mt-2'>{errors.title.message}</Text>}
+            <ErrorMessage>{errors.title?.message}</ErrorMessage>
         </div>
         
         <div className='flex flex-col'>
@@ -45,7 +46,7 @@ const NewIssuePage = () => {
                 {...register('description')} 
                 className='border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors'
             />
-            {errors.description && <Text className='text-red-600 text-sm mt-2'>{errors.description.message}</Text>}
+            <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
         <Button className='bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-800 transition-colors ease-in'>

@@ -1,0 +1,33 @@
+{
+    // Enable Emmet for JSX and TSX files (common in Next.js projects)
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "javascriptreact": "javascriptreact",
+        "typescript": "typescriptreact",
+        "typescriptreact": "typescriptreact",
+        "html": "javascriptreact", // For Next.js pages with HTML-like structure
+        "blade": "html" // If using Blade templates
+    },
+
+    // Enable Emmet abbreviations for Next.js component files
+    "emmet.syntaxProfiles": {
+        "javascriptreact": {
+            "selfClosingStyle": "xml" // Tailwind support for self-closing tags
+        },
+        "typescriptreact": {
+            "selfClosingStyle": "xml"
+        }
+    },
+
+    // Enable auto-close and other Emmet features
+    "emmet.showAbbreviationSuggestions": true,
+    "emmet.triggerExpansionOnTab": true,
+
+    // Optional: Adjust snippets or abbreviation completions for Next.js
+    "editor.snippetSuggestions": "inline",
+
+    // Prettier or formatting settings (optional but useful for a Next.js project)
+    "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5"
+}
