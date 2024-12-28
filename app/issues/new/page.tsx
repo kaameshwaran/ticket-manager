@@ -1,14 +1,15 @@
 'use client'
 
-import { Button, Callout, Text, TextArea, TextField } from '@radix-ui/themes'
+import {Button, TextArea, TextField } from '@radix-ui/themes'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createIssueSchema } from '@/app/validateSchemas'
 import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage'
+import Spinner from '@/app/components/Spinner'
 
 const NewIssuePage = () => {
     type issueForm = z.infer<typeof createIssueSchema>
@@ -16,7 +17,7 @@ const NewIssuePage = () => {
         resolver: zodResolver(createIssueSchema)
     });
     const router = useRouter()
-
+    const[isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <div className='max-w-xl p-6'>
@@ -25,8 +26,9 @@ const NewIssuePage = () => {
             try {
                 await axios.post('/api/issues', data);
                 router.push('/issues');
+                setIsSubmitting(true);
             } catch (error) {
-                console.log(error);
+                setIsSubmitting(false);
             }
         })}
         className='space-y-6'>
@@ -49,8 +51,9 @@ const NewIssuePage = () => {
             <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
-        <Button className='bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-800 transition-colors ease-in'>
-            Submit New Issue
+        <Button disabled={isSubmitting} className='bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-800 transition-colors ease-in'>
+            {isSubmitting ? "Submitting..." : "Submit New Issue"} 
+            {isSubmitting && <Spinner/>}
         </Button>
     </form>
     </div>
