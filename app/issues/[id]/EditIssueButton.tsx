@@ -6,10 +6,11 @@ import { Edit } from 'lucide-react'
 const EditIssueButton = ({ issueId }: {issueId: number}) => {
   return (
     <div>
-        <Button>
-          <Edit size={18}/>
-          <Link href={`/issues/${issueId}/edit`}>Edit</Link>
+        <Link href={`/issues/${issueId}/edit`}>
+        <Button style={{cursor: 'pointer'}}>
+          <Edit size={18}/> Edit
         </Button>
+        </Link>
     </div>
   )
 }
