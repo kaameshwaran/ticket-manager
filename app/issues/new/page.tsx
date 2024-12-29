@@ -28,7 +28,6 @@ const NewIssuePage = () => {
             setIsSubmitting(false);
         }
     })
-
   return (
     <div className='max-w-xl p-6'>
     <form
