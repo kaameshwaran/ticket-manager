@@ -26,9 +26,12 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     const[isSubmitting, setIsSubmitting] = useState(false);
     const submit = handleSubmit(async (data) => {
         try {
-            await axios.post('/api/issues', data);
-            router.push('/issues');
+            if(issue)
+                await axios.patch('/api/issues/' + issue.id, data);
+            else
+                await axios.post('/api/issues', data);
             setIsSubmitting(true);
+            router.push('/issues');
         } catch (error) {
             setIsSubmitting(false);
         }
@@ -63,7 +66,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
         style={{cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
         disabled={isSubmitting}
         >
-            {isSubmitting ? "Submitting..." : "Submit"} 
+            {issue ? "Update" : isSubmitting ? "Submitting..." : "Submit"}{' '}
             {isSubmitting && <Spinner/>}
             <SendHorizonal size={18}/>
         </Button>

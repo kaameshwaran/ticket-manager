@@ -11,11 +11,10 @@ export async function PATCH(
 
         if(!validation.success)
             return(NextResponse.json(validation.error.format(), {status: 401}))
-
+        console.log(parseInt(params.id))
         const issue = await prisma.issue.findUnique({
             where: { id: parseInt(params.id) },
         })
-
         if(!issue)
             return NextResponse.json({error: "Issue not found"}, {status: 404})
 
