@@ -6,29 +6,39 @@ import IssueDetails from './IssueDetails'
 import DeleteIssueButton from './DeleteIssueButton'
 
 interface Props {
-    params : { id : string}
+  params: { id: string };
 }
+
 const IssueDetailPage = async ({ params }: Props) => {
+  const { id } = await params;
+  const issueId = parseInt(id);
+
+
+  if (isNaN(issueId)) {
+    notFound();
+  }
+
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) }
+    where: { id: issueId },
   });
 
-  if(!issue)
-      notFound()
+  if (!issue) {
+    notFound();
+  }
 
   return (
-    <Grid columns={{initial: '1', sm: '5'}} gap={'5'}>  
-      <Box className='md:col-span-4'>
-        <IssueDetails issue={issue}/>
+    <Grid columns={{ initial: '1', sm: '5' }} gap={'5'}>
+      <Box className="md:col-span-4">
+        <IssueDetails issue={issue} />
       </Box>
       <Box>
         <Flex direction={'column'} gap={'3'}>
-        <EditIssueButton issueId={issue.id}/>
-        <DeleteIssueButton issueId={issue.id}/>
+          <EditIssueButton issueId={issue.id} />
+          <DeleteIssueButton issueId={issue.id} />
         </Flex>
       </Box>
     </Grid>
-  )
-}
+  );
+};
 
-export default IssueDetailPage
+export default IssueDetailPage;
