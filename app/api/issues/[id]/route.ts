@@ -4,7 +4,7 @@ import prisma from "@/prisma/client";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const body = await request.json();
   const validation = IssueSchema.safeParse(body);
@@ -16,7 +16,8 @@ export async function PATCH(
     );
   }
 
-  const issueId = parseInt(params.id);
+  const id = (await params).id;
+  const issueId = parseInt(id);
   if (isNaN(issueId)) {
     return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
   }
