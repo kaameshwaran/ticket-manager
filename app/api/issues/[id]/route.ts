@@ -1,7 +1,6 @@
 import { IssueSchema } from "@/app/validateSchemas";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/prisma/client";
-
+import prisma from '@/prisma/client';
 
 export async function PATCH(
   request: NextRequest,
@@ -22,6 +21,11 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
   }
 
+  const issueId = parseInt(params.id);
+  if (isNaN(issueId)) {
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
+  }
+
   const issue = await prisma.issue.findUnique({
     where: { id: issueId },
   });
@@ -31,6 +35,7 @@ export async function PATCH(
   }
 
   const updatedIssue = await prisma.issue.update({
+    where: { id: issueId },
     where: { id: issueId },
     data: {
       title: body.title,
@@ -46,8 +51,13 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  {params}: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;  
+  const issueId = parseInt(id);
+  if (isNaN(issueId)) {
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
+  }
   
   const id = (await params).id;
   const issueId = parseInt(id);
