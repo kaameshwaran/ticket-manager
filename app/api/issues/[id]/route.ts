@@ -2,7 +2,7 @@ import { IssueSchema } from "@/app/validateSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
-export async function PATCH(
+export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -43,6 +43,7 @@ export async function PATCH(
     issue: updatedIssue,
   });
 }
+
 
 export async function DELETE(
   request: NextRequest,
