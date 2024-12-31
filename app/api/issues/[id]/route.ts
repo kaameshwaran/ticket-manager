@@ -1,6 +1,6 @@
 import { IssueSchema } from "@/app/validateSchemas";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from '@/prisma/client';
+import prisma from "@/prisma/client";
 
 export async function PATCH(
   request: NextRequest,
@@ -16,17 +16,21 @@ export async function PATCH(
     );
   }
 
+  const issueId = parseInt(params.id);
+  if (isNaN(issueId)) {
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
+  }
+
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: issueId },
   });
 
   if (!issue) {
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
 
-
   const updatedIssue = await prisma.issue.update({
-    where: { id: parseInt(params.id) },
+    where: { id: issueId },
     data: {
       title: body.title,
       description: body.description,
@@ -41,11 +45,16 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  {params}: { params: { id: string } }
 ) {
+  const { id } = await params;  
+  const issueId = parseInt(id);
+  if (isNaN(issueId)) {
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
+  }
 
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: issueId },
   });
 
   if (!issue) {
@@ -53,7 +62,7 @@ export async function DELETE(
   }
 
   await prisma.issue.delete({
-    where: { id: parseInt(params.id) },
+    where: { id: issueId },
   });
 
   return NextResponse.json({ message: "Issue deleted successfully" });
