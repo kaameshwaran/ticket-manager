@@ -31,11 +31,6 @@ export async function PATCH(
     export async function DELETE(
     request : NextRequest,
     { params }: { params: {id: string} }){
-        const body = await request.json();
-        const validation = IssueSchema.safeParse(body);
-
-        if(!validation.success)
-            return(NextResponse.json(validation.error.format(), {status: 401}))
         
         const issue = await prisma.issue.findUnique({
             where: { id: parseInt(params.id) },
