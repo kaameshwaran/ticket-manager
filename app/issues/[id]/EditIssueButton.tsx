@@ -1,14 +1,18 @@
+'use client'
 import { Button } from '@radix-ui/themes'
-import Link from 'next/link'
 import { Edit } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
 
 const EditIssueButton = ({ issueId }: {issueId: number}) => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`/issues/${issueId}/edit`)
+  }
   return (
-    <Button style={{ cursor: 'pointer' }}>
+    <Button style={{ cursor: 'pointer' }} onClick={handleClick}>
       <Edit size={18} />
-      <Link href={`/issues/${issueId}/edit`}>
        Edit
-      </Link>
     </Button>
   )
 }
