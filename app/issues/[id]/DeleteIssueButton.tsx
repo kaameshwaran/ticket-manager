@@ -3,11 +3,22 @@ import {AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 
 const DeleteIssueButton = ({ issueId }: {issueId: number}) => {
   const router = useRouter()
+  const[error, setError] = useState(false);
+  const deleteIssue = async() =>{
+        try {
+            await axios.delete('/api/issues/' + issueId);
+            router.push('/issues')
+            router.refresh()
+        } catch (error) {
+            setError(true)
+        }
+    }
   return (
+    <>
     <AlertDialog.Root>
 		<AlertDialog.Trigger>
 			<Button color='red' style={{cursor: 'pointer'}}>
@@ -24,19 +35,23 @@ const DeleteIssueButton = ({ issueId }: {issueId: number}) => {
             </AlertDialog.Description>
             <Flex mt={'2'} gap={'3'}>
                 <AlertDialog.Cancel>
-                    <Button style={{cursor: 'pointer'}} color='gray'>Cancel</Button>
+                    <Button style={{cursor: 'pointer'}} color='gray' variant='soft'>Cancel</Button>
                 </AlertDialog.Cancel>
                 <AlertDialog.Action>
-                    <Button onClick={async() =>{
-                        await axios.delete('/api/issues/' + issueId);
-                        router.push('/issues')
-                        router.refresh()
-                    }}
+                    <Button onClick={deleteIssue}
                     style={{cursor: 'pointer'}} color='red'>Yes, delete</Button>
                 </AlertDialog.Action>
             </Flex>
         </AlertDialog.Content>
 	</AlertDialog.Root>
+    <AlertDialog.Root open={error}>
+    <AlertDialog.Content>
+        <AlertDialog.Title>Error</AlertDialog.Title>
+        <AlertDialog.Description>This issue could not be deleted.</AlertDialog.Description>
+        <Button color='gray' variant='soft' mt={'5'} onClick={() => {setError(false)}}>Ok</Button>
+    </AlertDialog.Content>
+    </AlertDialog.Root>
+    </>
   )
 }
 

@@ -2,9 +2,9 @@ import { IssueSchema } from "@/app/validateSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
-export async function POST(
+export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const body = await request.json();
   const validation = IssueSchema.safeParse(body);
@@ -16,7 +16,7 @@ export async function POST(
     );
   }
 
-  const id = params.id;
+  const { id } = await params;
   const issueId = parseInt(id);
   if (isNaN(issueId)) {
     return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
