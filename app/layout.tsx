@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NavBar from './NavBar'
 import AuthProvider from './auth/Provider'
+import ClientProvider from './ClientProvider';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -25,14 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable}>
-        <AuthProvider>
-          <Theme>
-            <NavBar/>
-            <main className='p-5'>
-              <Container>{children}</Container>
-            </main>
-          </Theme>
-        </AuthProvider>
+        <ClientProvider>
+          <AuthProvider>
+            <Theme>
+              <NavBar/>
+              <main className='p-5'>
+                <Container>{children}</Container>
+              </main>
+            </Theme>
+          </AuthProvider>
+        </ClientProvider>
       </body>
     </html>
   )
