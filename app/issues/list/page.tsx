@@ -1,11 +1,11 @@
-import { Table } from '@radix-ui/themes';
+import { Flex, Table } from '@radix-ui/themes';
 import prisma from '@/prisma/client';
 import {IssueStatusBadge, Link, IssueActions} from '@/app/components';
 
 const Issues = async () => {
   const issues = await prisma.issue.findMany()
   return (
-    <div className="p-6">
+    <Flex direction={'column'} p="2">
       <IssueActions/>
       <Table.Root variant="surface">
         <Table.Header>
@@ -38,7 +38,7 @@ const Issues = async () => {
           ))}
         </Table.Body>
       </Table.Root>
-    </div>
+    </Flex>
   );
 };
 

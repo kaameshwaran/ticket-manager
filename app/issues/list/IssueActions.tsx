@@ -1,20 +1,26 @@
-import { Button } from '@radix-ui/themes'
+import { Box, Button, Flex, Link } from '@radix-ui/themes'
 import { PlusCircle } from 'lucide-react'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
+import IssueStatusFilter from './IssueStatusFilter'
 
 const IssueActions = () => {
+  
   return (
     <div>
-        <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold">Issue Tracker</h1>
-            <Link href="/issues/new">
-                <Button style={{cursor : 'pointer'}}>
-                    <PlusCircle size={18} />
-                    New Issue
-                </Button>
-            </Link>
-        </div>
+      <h1 className="text-2xl font-bold">Issue Tracker</h1>
+      <Flex gap={'3'} mt={'3'} mb={'3'} justify={'between'}>
+         <Flex align={'center'} direction={'row'}>
+            <p className='font-medium mr-2'>Filter:</p>
+            <IssueStatusFilter />
+         </Flex>
+         <Link href="/issues/new">
+          <Button style={{cursor: 'pointer'}}>
+            <PlusCircle size={18} />
+            New Issue
+          </Button>
+        </Link>
+      </Flex>
     </div>
   )
 }
