@@ -42,11 +42,10 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     <form
         onSubmit={submit}
         className='space-y-6'>
-        
         <div className='flex flex-col'>
-            <TextField.Root 
-                defaultValue={issue?.title}
-                placeholder='Issue' 
+            <TextField.Root
+                placeholder='Title'
+                defaultValue={issue?.title} 
                 {...register('title')} 
                 className='border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors'
             />
