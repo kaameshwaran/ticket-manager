@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Link } from '@radix-ui/themes'
 import { PlusCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 import IssueStatusFilter from './IssueStatusFilter'
 
