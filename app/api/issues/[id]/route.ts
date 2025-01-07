@@ -21,7 +21,7 @@ export async function PATCH(
     );
   }
 
-  const { assignedToUserId, title, description } = body;
+  const { status, assignedToUserId, title, description } = body;
 
   if (assignedToUserId) {
     const user = await prisma.user.findUnique({
@@ -36,6 +36,20 @@ export async function PATCH(
   const issueId = parseInt(id);
   if (isNaN(issueId)) {
     return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
+  }
+
+  if (status) {
+    const issue = await prisma.issue.update({
+      where: { id: issueId },
+      data: { status },
+    });
+
+    if (!issue) {
+      return NextResponse.json(
+        { error: "Couldn't update status" },
+        { status: 400 }
+      );
+    }
   }
 
   const issue = await prisma.issue.findUnique({
