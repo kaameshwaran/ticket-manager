@@ -4,7 +4,7 @@ import { Status } from '@prisma/client'
 
 const statusMap: Record<Status, {
     label: string,
-    color: 'red' | 'violet' | 'green'  // Using Radix UI's color system
+    color: 'red' | 'violet' | 'green' 
   }> = {
     OPEN: { 
       label: 'Open',

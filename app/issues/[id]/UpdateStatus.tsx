@@ -6,8 +6,9 @@ import { Skeleton } from '@/app/components'
 import toast, { Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
 
-const UpdateStatus = ( { issue }: { issue: Issue } ) => {
-  
+
+const UpdateStatus = ({ issue }: { issue: Issue }) => {
+
   const [loading, setLoading] = useState(true);  
 
   const statuses: {label: String, value: Status}[] = [
@@ -22,18 +23,14 @@ const UpdateStatus = ( { issue }: { issue: Issue } ) => {
     }
   }, [issue.status]); 
 
-  const updateStatus = async (status: Status) => {
-    axios
-        .patch('/api/issues/' + issue.id, {
-            status: status
-        })
-        .then(() => {
-            toast.success('Issue status updated successfully!')
-        })
-        .catch(() =>{
-            toast.error('Failed to update issue status')
-        });
+    const updateStatus = (newStatus: string) => {
+    try {
+      axios.patch(`/api/issues/${issue.id}`, { status: newStatus });
+      toast.success('Issue status updated successfully!');
+    } catch {
+      toast.error('Failed to update issue status.');
     }
+  };
 
 
   if (loading) {

@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Link } from '@radix-ui/themes'
+import { Button, Flex, Link } from '@radix-ui/themes'
 import { PlusCircle } from 'lucide-react'
 import React from 'react'
 import IssueStatusFilter from './IssueStatusFilter'
 
-const IssueActions = () => {
+const IssueActions = ({ currentStatus }: { currentStatus: string }) => {
   
   return (
     <div>
@@ -11,7 +11,7 @@ const IssueActions = () => {
       <Flex gap={'3'} mt={'3'} mb={'3'} justify={'between'}>
          <Flex align={'center'} direction={'row'}>
             <p className='font-medium mr-2'>Filter:</p>
-            <IssueStatusFilter />
+            <IssueStatusFilter currentStatus={currentStatus} />
          </Flex>
          <Link href="/issues/new">
           <Button style={{cursor: 'pointer'}}>
