@@ -3,7 +3,7 @@ import { PlusCircle } from 'lucide-react'
 import React from 'react'
 import IssueStatusFilter from './IssueStatusFilter'
 
-const IssueActions = ({ currentStatus }: { currentStatus: string }) => {
+const IssueActions = () => {
   
   return (
     <div>
@@ -11,7 +11,7 @@ const IssueActions = ({ currentStatus }: { currentStatus: string }) => {
       <Flex gap={'3'} mt={'3'} mb={'3'} justify={'between'}>
          <Flex align={'center'} direction={'row'}>
             <p className='font-medium mr-2'>Filter:</p>
-            <IssueStatusFilter currentStatus={currentStatus} />
+            <IssueStatusFilter />
          </Flex>
          <Link href="/issues/new">
           <Button style={{cursor: 'pointer'}}>
