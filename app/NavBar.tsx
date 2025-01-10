@@ -14,13 +14,13 @@ const NavBar = () => {
     return (
         <nav className='border-b px-5 mb-5 py-3'>
             <Container>
-            <Flex justify={'between'}>
-                <Flex align={'center'} gap={'3'}>
-                    <Link href={'/'}><AiFillBug/></Link>
-                    <NavLinks/>
+                <Flex justify={'between'}>
+                    <Flex align={'center'} gap={'3'}>
+                        <Link href={'/'}><AiFillBug/></Link>
+                        <NavLinks/>
+                    </Flex>
+                    <AuthStatus/>
                 </Flex>
-                <AuthStatus/>
-            </Flex>
             </Container>
         </nav>
   )
@@ -32,6 +32,7 @@ export const NavLinks = () => {
     const links = [
         { name: 'DashBoard', url: '/' },
         { name: 'Issues', url: '/issues/list' },
+        { name: 'Profile', url: '/profile'},
     ]
 
     return (
