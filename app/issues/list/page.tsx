@@ -4,9 +4,19 @@ import { IssueStatusBadge, Link, IssueActions } from '@/app/components';
 import NextLink from 'next/link';
 import { Issue, Status } from '@prisma/client';
 import { ArrowUpDown } from 'lucide-react';
+import Pagination from '@/app/components/Pagination';
 
-const Issues = async ({ searchParams }: { searchParams: { status?: Status, orderBy?: keyof Issue, sortState?: 'asc' | 'desc' | 'none' } }) => {
-  const columns: { label: String, value: keyof Issue }[] = [
+const Issues = async ({
+  searchParams,
+}: {
+  searchParams: {
+    status?: Status;
+    orderBy?: keyof Issue;
+    sortState?: 'asc' | 'desc' | 'none';
+    page: string;
+  };
+}) => {
+  const columns: { label: String; value: keyof Issue }[] = [
     { label: 'Issue', value: 'title' },
     { label: 'Status', value: 'status' },
     { label: 'Created', value: 'createdAt' },
@@ -20,10 +30,13 @@ const Issues = async ({ searchParams }: { searchParams: { status?: Status, order
   const currentSortState = searchParams.sortState || 'none';
   const currentOrderBy = searchParams.orderBy;
 
-
   const getNextSortState = (column: keyof Issue) => {
     if (currentOrderBy === column) {
-      return currentSortState === 'none' ? 'asc' : currentSortState === 'asc' ? 'desc' : 'none';
+      return currentSortState === 'none'
+        ? 'asc'
+        : currentSortState === 'asc'
+        ? 'desc'
+        : 'none';
     }
     return 'asc';
   };
@@ -33,13 +46,20 @@ const Issues = async ({ searchParams }: { searchParams: { status?: Status, order
       ? { [currentOrderBy]: currentSortState }
       : undefined;
 
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
   const issues = await prisma.issue.findMany({
     where: { status },
     orderBy,
+    skip: (page - 1) * 10,
+    take: 10,
+  });
+  const issueCount = await prisma.issue.count({
+    where: { status },
   });
 
   return (
-    <Flex direction={'column'} p="2">
+    <Flex direction={'column'} p="2" gap='2'>
       <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
@@ -57,15 +77,14 @@ const Issues = async ({ searchParams }: { searchParams: { status?: Status, order
                 >
                   {label}
                 </NextLink>
-                {value === currentOrderBy &&
-                  currentSortState !== 'none' && (
-                    <ArrowUpDown
-                      size={17}
-                      className={`inline ${
-                        currentSortState === 'asc' ? 'rotate-180' : ''
-                      }`}
-                    />
-                  )}
+                {value === currentOrderBy && currentSortState !== 'none' && (
+                  <ArrowUpDown
+                    size={17}
+                    className={`inline ${
+                      currentSortState === 'asc' ? 'rotate-180' : ''
+                    }`}
+                  />
+                )}
               </Table.ColumnHeaderCell>
             ))}
           </Table.Row>
@@ -91,6 +110,11 @@ const Issues = async ({ searchParams }: { searchParams: { status?: Status, order
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        totalItem={issueCount}
+        pageSize={pageSize}
+        currentPage={page}
+      />
     </Flex>
   );
 };
