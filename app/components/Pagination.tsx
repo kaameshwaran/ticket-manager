@@ -35,6 +35,7 @@ const Pagination = ({ totalItem, pageSize, currentPage }: Props) => {
           variant="soft"
           disabled={currentPage === 1}
           onClick={() => handlePageChange(1)}
+          style={{ borderRadius: '8px', cursor: 'pointer' }}
         >
           <AiFillBackward />
         </Button>
@@ -43,6 +44,7 @@ const Pagination = ({ totalItem, pageSize, currentPage }: Props) => {
           variant="soft"
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
+          style={{ borderRadius: '8px', cursor: 'pointer' }}
         >
           <AiFillCaretLeft />
         </Button>
@@ -54,6 +56,7 @@ const Pagination = ({ totalItem, pageSize, currentPage }: Props) => {
           variant="soft"
           disabled={currentPage === totalPage}
           onClick={() => handlePageChange(currentPage + 1)}
+          style={{ borderRadius: '8px', cursor: 'pointer' }}
         >
           <AiFillCaretRight />
         </Button>
@@ -62,6 +65,7 @@ const Pagination = ({ totalItem, pageSize, currentPage }: Props) => {
           variant="soft"
           disabled={currentPage === totalPage}
           onClick={() => handlePageChange(totalPage)}
+          style={{ borderRadius: '8px', cursor: 'pointer' }}
         >
           <AiFillForward />
         </Button>
