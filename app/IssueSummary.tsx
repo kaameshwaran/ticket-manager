@@ -9,16 +9,16 @@ interface Props {
   inProgress: number;
 }
 const IssueSummary = ({ open, closed, inProgress }: Props) => {
+  
   const containers: { label: string; value: number; status: Status }[] = [
     { label: 'Open Issues', value: open, status: 'OPEN' },
     { label: 'In Progress Issues', value: inProgress, status: 'IN_PROGRESS' },
     { label: 'Closed Issues', value: closed, status: 'CLOSED' },
   ];
   return (
-    <>
-      <Flex gap="4">
+      <Flex gap="4" >
         {containers.map((container) => (
-          <Card className='w-40' key={container.status}>
+          <Card className='w-25' key={container.status}>
             <Flex direction="column" align="center" gap="2">
               <Link
                 className="text-sm font-medium"
@@ -33,7 +33,6 @@ const IssueSummary = ({ open, closed, inProgress }: Props) => {
           </Card>
         ))}
       </Flex>
-    </>
   );
 };
 

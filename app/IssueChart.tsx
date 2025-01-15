@@ -38,7 +38,7 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
     { label: 'Closed Issues', value: closed },
   ], [open, inProgress, closed]);
 
-  if (!userIssues.length) {
+  if (!userIssues?.length) {
     return (
       <Card className="p-6">
         <h2 className="text-2xl font-bold text-center">No data available</h2>
@@ -51,13 +51,13 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
+      className="w-full"
     >
-      <Card className="p-6 shadow-lg">
-        {/* Overall Status Chart */}
+      <Card className="p-8 shadow-lg w-full">
         <motion.div className="mb-12">
           <h2 className="text-2xl font-bold mb-8 text-center">Overall Status</h2>
-          <div style={{ width: '100%', height: 300 }}>
-            <ResponsiveContainer>
+          <div className="w-full h-[300px] min-h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
                 <XAxis dataKey="label" />
                 <YAxis />
@@ -75,10 +75,9 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
           </div>
         </motion.div>
 
-        {/* User Charts */}
-        <motion.div>
-          <h2 className="text-2xl font-bold my-8 text-center">Assigned to Users</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div className="w-full">
+          <h2 className="text-2xl font-bold my-8 text-center">Assigned to User</h2>
+          <div className="flex flex-col items-center overflow-y-auto max-h-[600px]">
             {userIssues.map((userIssue, index) => {
               const pieData = [
                 { name: 'Open', value: userIssue.open },
@@ -92,12 +91,13 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  className="w-full mb-8"
                 >
-                  <Card className="p-4">
-                    <h3 className="text-xl font-semibold mb-4 text-center">
+                  <Card className="p-4 mx-auto w-full max-w-[500px]">
+                    <h3 className="text-xl font-semibold mb-4 text-center"> 
                       {userIssue.user}
                     </h3>
-                    <div style={{ width: '100%', height: 300 }}>
+                    <div style={{ width: '100%', height: 350 }}>
                       <ResponsiveContainer>
                         <PieChart>
                           <Pie
@@ -106,18 +106,25 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
                             nameKey="name"
                             cx="50%"
                             cy="50%"
-                            outerRadius={80}
-                            label={({ value }) => value > 0 ? value : ''}
+                            outerRadius={100}
+                            label={({ name, value }) => `${name}: ${value}`}
+                            labelLine={true}
+                            paddingAngle={0}
                           >
                             {pieData.map((_, index) => (
                               <Cell 
                                 key={`cell-${index}`} 
                                 fill={Object.values(COLORS)[index]}
+                                strokeWidth={1}
                               />
                             ))}
                           </Pie>
                           <Tooltip />
-                          <Legend />
+                          <Legend 
+                            verticalAlign="bottom" 
+                            height={36}
+                            formatter={(value) => <span className="text-sm">{value}</span>}
+                          />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
