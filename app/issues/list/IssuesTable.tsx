@@ -1,36 +1,24 @@
 import { Table } from '@radix-ui/themes';
 import NextLink from 'next/link';
-import { Issue } from '@prisma/client';
+import { Issue, Status } from '@prisma/client';
 import { ArrowUpDown } from 'lucide-react';
 import { IssueStatusBadge, Link } from '@/app/components';
 
 const IssuesTable = ({
+  columns,
   issues,
   searchParams,
+  currentOrderBy,
+  currentSortState,
+  getNextSortState,
 }: {
+  columns: { label: String; value: keyof Issue; width: string }[];
   issues: Issue[];
   searchParams: any;
+  currentOrderBy: keyof Issue | undefined;
+  currentSortState: 'asc' | 'desc' | 'none';
+  getNextSortState: (column: keyof Issue) => 'asc' | 'desc' | 'none';
 }) => {
-  const columns: { label: String; value: keyof Issue; width: string }[] = [
-    { label: 'Issue', value: 'title', width: '50%' },
-    { label: 'Status', value: 'status', width: '25%' },
-    { label: 'Created', value: 'createdAt', width: '25%' },
-  ];
-
-  const currentOrderBy = searchParams.orderBy;
-  const currentSortState = searchParams.sortState || 'none';
-
-  const getNextSortState = (column: keyof Issue) => {
-    if (currentOrderBy === column) {
-      return currentSortState === 'none'
-        ? 'asc'
-        : currentSortState === 'asc'
-        ? 'desc'
-        : 'none';
-    }
-    return 'asc';
-  };
-
   return (
     <Table.Root variant="surface" style={{ tableLayout: 'fixed', width: '100%' }}>
       <Table.Header>
