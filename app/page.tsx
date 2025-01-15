@@ -4,6 +4,7 @@ import IssueChart from './IssueChart'
 import { Flex, Grid } from '@radix-ui/themes'
 import IssueSummary from './IssueSummary'
 import LatestIssues from './LatestIssues'
+import { Metadata } from 'next'
 
 const HomePage = async () => {
   const open = await prisma.issue.count({ where: { status: 'OPEN' } })
@@ -54,3 +55,8 @@ const HomePage = async () => {
 }
 
 export default HomePage
+
+export const metadata: Metadata = {
+  title: 'Ticket Manager Dashboard',
+  description: 'View the summary Ticket Status',
+};

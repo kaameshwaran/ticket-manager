@@ -31,7 +31,7 @@ export const NavLinks = () => {
     const currentPath = usePathname(); 
     const links = [
         { name: 'DashBoard', url: '/' },
-        { name: 'Issues', url: '/issues/list' },
+        { name: 'Tickets', url: '/issues/list' },
         { name: 'Profile', url: '/profile'},
     ]
 

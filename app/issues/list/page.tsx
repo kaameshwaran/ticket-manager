@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 import { Issue, Status } from '@prisma/client';
 import { ArrowUpDown } from 'lucide-react';
 import Pagination from '@/app/components/Pagination';
+import { Metadata } from 'next';
 
 const Issues = async ({
   searchParams,
@@ -120,5 +121,10 @@ const Issues = async ({
 };
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Ticket List',
+  description: 'View and manage the status of Tickets',
+};
 
 export default Issues;

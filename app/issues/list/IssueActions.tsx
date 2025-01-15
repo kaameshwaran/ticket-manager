@@ -7,7 +7,7 @@ const IssueActions = () => {
   
   return (
     <div>
-      <h1 className="text-2xl font-bold">Issue Tracker</h1>
+      <h1 className="text-2xl font-bold">Ticket Manager</h1>
       <Flex gap={'3'} mt={'3'} mb={'3'} justify={'between'}>
          <Flex align={'center'} direction={'row'}>
             <p className='font-medium mr-2'>Filter:</p>
@@ -16,7 +16,7 @@ const IssueActions = () => {
          <Link href="/issues/new">
           <Button style={{cursor: 'pointer'}}>
             <PlusCircle size={18} />
-            New Issue
+            New Ticket
           </Button>
         </Link>
       </Flex>
