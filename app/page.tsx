@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
 import Pagination from './components/Pagination'
+import LatestIssues from './LatestIssues'
 
-const page = ({searchParams}: { searchParams: { page: string } }) => {
+const page = () => {
   return (
-    <>
-    <div className='text-black ml-10'>Home</div>
-    <Pagination totalItem={120} currentPage={parseInt(searchParams.page)} pageSize={10} />
-    </>
+  <>
+  <LatestIssues/>
+  </>
   )
 }
 
