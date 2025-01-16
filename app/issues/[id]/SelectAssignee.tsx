@@ -70,7 +70,8 @@ const useUsers = () => useQuery<User[]>({
     axios
       .get('/api/users')
       .then(res => res.data),
-  staleTime: 60 * 1000,
+  cacheTime: 0,
+  staleTime: 0, 
   retry: 2
 });
 
