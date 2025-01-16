@@ -31,6 +31,45 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
+const renderCustomLabel = (props: any) => {
+  const { cx, cy, midAngle, innerRadius, outerRadius, value, name } = props;
+  if (value === 0) return null;
+  
+  const RADIAN = Math.PI / 180;
+  // Increase the radius to push labels further out
+  const radius = outerRadius * 1.2;
+  let x = cx + radius * Math.cos(-midAngle * RADIAN);
+  let y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  // Adjust label position based on angle to prevent overlapping
+  const textAnchor = x > cx ? 'start' : 'end';
+  // Add some padding to x position
+  x = x > cx ? x + 10 : x - 10;
+
+  return (
+    <g>
+      <line
+        x1={cx + (outerRadius * Math.cos(-midAngle * RADIAN))}
+        y1={cy + (outerRadius * Math.sin(-midAngle * RADIAN))}
+        x2={x}
+        y2={y}
+        stroke="#999"
+        strokeWidth={1}
+      />
+      <text
+        x={x}
+        y={y}
+        textAnchor={textAnchor}
+        dominantBaseline="middle"
+        fill="#666"
+        fontSize="12"
+      >
+        {`${name}: ${value}`}
+      </text>
+    </g>
+  );
+};
+
 const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
   const barData = React.useMemo(() => [
     { label: 'Open Issues', value: open },
@@ -106,10 +145,10 @@ const IssueChart = ({ open, closed, inProgress, userIssues = [] }: Props) => {
                             nameKey="name"
                             cx="50%"
                             cy="50%"
-                            outerRadius={100}
-                            label={({ name, value }) => `${name}: ${value}`}
-                            labelLine={true}
-                            paddingAngle={0}
+                            outerRadius={80}
+                            label={renderCustomLabel}
+                            labelLine={false}
+                            paddingAngle={1}
                           >
                             {pieData.map((_, index) => (
                               <Cell 
