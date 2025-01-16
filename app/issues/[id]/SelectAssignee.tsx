@@ -89,3 +89,4 @@ const useUsers = () => {
 };
 
 export default SelectAssignee;
+export const dynamic = 'force-dynamic';
