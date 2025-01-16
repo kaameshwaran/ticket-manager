@@ -32,7 +32,6 @@ export const NavLinks = () => {
     const links = [
         { name: 'DashBoard', url: '/' },
         { name: 'Tickets', url: '/issues/list' },
-        { name: 'Profile', url: '/profile'},
     ]
 
     return (
