@@ -53,6 +53,7 @@ const IssueDetailPage = async ({ params }: Props) => {
 };
 
 export default IssueDetailPage;
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: Props) {
   const { id } = params;
@@ -69,7 +70,7 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: "Title: " + issue.title,
-    description: "Description: " + issue.description,
+    title: issue.title,
+    description: issue.description,
   };
 }
