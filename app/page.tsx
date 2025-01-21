@@ -55,6 +55,7 @@ const HomePage = async () => {
 }
 
 export default HomePage
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Ticket Manager Dashboard',
